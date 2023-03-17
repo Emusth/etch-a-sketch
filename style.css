@@ -1,3 +1,31 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background-color: saddlebrown;
+  background-color: rgb(225, 123, 51);
+}
+
+.grid__div {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  grid-gap: 1px;
+  margin: 10rem auto 0;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.grid__square {
+  content: "";
+  width: 10rem;
+  height: 10rem;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.grid__square--hover {
+  background-color: rgb(51, 112, 225);
 }/*# sourceMappingURL=style.css.map */
