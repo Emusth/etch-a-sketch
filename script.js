@@ -49,6 +49,7 @@ const gridSetup = {
         for (let i = 0; i < size; i++) {
             let div = document.createElement('div');
             div.classList.add('grid__square', `grid__square--${i}`); 
+            div.dataset.brightness = '100';
             this.squaresArray.push(div);
         }
     },
@@ -69,14 +70,6 @@ const gridSetup = {
 }
 
 const gridHoverEvent = {
-    // squaresList: document.querySelector('.grid__div').childNodes,
-    
-    // addListeners: function() {
-    //     this.squaresList.forEach(square => square.addEventListener('mouseover', this.changeColorHover));
-    // },
-    // changeColorHover: function(e) {
-    //     
-    // }
     square: document.querySelector('.grid__div'),
     
     addGridSquareListener: function(){
@@ -85,12 +78,28 @@ const gridHoverEvent = {
     
     changeColorHover: function(e) {
         e.stopPropagation();
-        e.target.classList.add('grid__square--hover');
+        if(e.target.classList.contains('grid__div')) return;
+        
+        let that = gridHoverEvent;
+        let rgb = that.createRandomRGB(e);
+        let brightness = Number(e.target.dataset.brightness);
+        e.target.dataset.brightness = `${brightness === 0 ? 0 : brightness - 10}`;
+
+        e.target.style.cssText = `background-color: ${rgb}; filter: brightness(${brightness}%)`
+
         e.target.addEventListener('mouseout', function(e){
-            e.stopPropagation();
-            e.target.classList.remove('grid__square--hover');
+            e.target.style.cssText = `background-color: transparent; filter: brightness(100%);`;
         });
+    },
+    
+    createRandomRGB: function(e) {
+        let rgbArr = [];
+        for(let i = 0; i < 3; i++) {
+            rgbArr[i] = Math.floor(Math.random() * 225);
+        }
+        return `rgb(${rgbArr[0]},${rgbArr[1]},${rgbArr[2]})`;
     }
+    
 }
 gridInput.addGridInputListener();
 gridHoverEvent.addGridSquareListener();
