@@ -78,18 +78,21 @@ const gridHoverEvent = {
     
     changeColorHover: function(e) {
         e.stopPropagation();
+        
         if(e.target.classList.contains('grid__div')) return;
         
         let that = gridHoverEvent;
         let rgb = that.createRandomRGB(e);
         let brightness = Number(e.target.dataset.brightness);
+
         e.target.dataset.brightness = `${brightness === 0 ? 0 : brightness - 10}`;
 
         e.target.style.cssText = `background-color: ${rgb}; filter: brightness(${brightness}%)`
 
-        e.target.addEventListener('mouseout', function(e){
-            e.target.style.cssText = `background-color: transparent; filter: brightness(100%);`;
-        });
+        // ***** Code below returns square to transparent on mouseout
+        // e.target.addEventListener('mouseout', function(e){
+        //     e.target.style.cssText = `background-color: transparent; filter: brightness(100%);`;
+        // });
     },
     
     createRandomRGB: function(e) {
